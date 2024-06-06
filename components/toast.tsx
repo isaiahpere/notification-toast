@@ -7,15 +7,28 @@ import {
   AiOutlineWarning,
 } from "react-icons/ai";
 
-export enum IconsKeys {
+import { getToastClass, getToastPosition } from "@/app/helpers";
+import { ToastPosition } from "@/hooks/useToast";
+
+export enum ToastIconsKey {
   success = "success",
   warning = "warning",
   info = "info",
   error = "error",
 }
+
+const animations = {
+  fade: "fadeIn",
+  pop: "popup",
+  slide: "slideIn",
+};
+export type AnimationType = keyof typeof animations;
+
 interface IProps {
-  type: IconsKeys;
-  message?: string;
+  type?: ToastIconsKey | any;
+  message?: string | any;
+  position: ToastPosition;
+  animationTye?: AnimationType;
   onClose?: () => void;
 }
 
@@ -25,32 +38,26 @@ const icons = {
   info: <AiOutlineInfoCircle />,
   error: <AiOutlineCloseCircle />,
 };
+type IconKeys = keyof typeof icons;
 
-const Toast = ({ type = IconsKeys.info, message, onClose }: IProps) => {
-  const getToastClass = (type: IconsKeys) => {
-    switch (type) {
-      case IconsKeys.success:
-        return "bg-[#4caf50]";
-      case IconsKeys.warning:
-        return "bg-[#ff9800]";
-      case IconsKeys.info:
-        return "bg-[#2196f3]";
-      case IconsKeys.error:
-        return "bg-[#f44336]";
-      default:
-        return "bg-[#2196f3]";
-    }
-  };
+const Toast = ({
+  type = ToastIconsKey.info,
+  message,
+  position,
+  animationTye = "slide",
+  onClose,
+}: IProps) => {
+  let iconType: IconKeys = type;
+
   let toastclass = getToastClass(type);
-  console.log("HELLO");
+  let positionClass = getToastPosition(position);
 
-  console.log(toastclass);
   return (
     <div
-      className={`w-full p-4 m-2.5 text-white flex items-center rounded-lg shadow-md ${toastclass}`}
+      className={` p-4 m-2.5 text-white flex items-center rounded-lg shadow-md ${toastclass} fixed ${positionClass}${animations[animationTye]}`}
     >
-      <span className="mr-4 text-xl">{icons[type]}</span>
-      {message}
+      <span className=" text-xl">{icons[iconType]}</span>
+      <span className="px-4">{message}</span>
       <AiOutlineClose
         color="white"
         onClick={onClose}
