@@ -8,7 +8,7 @@ import {
   AiOutlineWarning,
 } from "react-icons/ai";
 
-import { getToastClass, getAnimation } from "@/helpers";
+import { getToastClass, getAnimation } from "@/app/helpers";
 import { positionType } from "@/hooks/useToast";
 
 export enum ToastIconsKey {
@@ -65,14 +65,14 @@ const Toast = ({
 
   return (
     <div
-      className={`p-4 m-2.5 text-white flex items-center rounded-lg shadow-md ${toastclass} ${animationClass}`}
+      className={`w-auto p-4 my-1 text-white flex items-center rounded-lg shadow-md ${toastclass} ${animationClass}`}
       aria-live={ariaLive}
       role={ariaRole}
       ref={toastRef}
       tabIndex={-1}
     >
       <span className=" text-xl">{icons[iconType]}</span>
-      <span className="px-4">{message}</span>
+      <span className="px-4 text-sm">{message}</span>
       <button
         className="ml-auto cursor-pointer text-lg"
         onClick={onClose}

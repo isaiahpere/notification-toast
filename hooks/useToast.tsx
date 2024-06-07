@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import Toast, { AnimationType } from "@/components/toast";
 import { ToastIconsKey } from "@/components/toast";
 import { v4 as uuid_v4 } from "uuid";
-import { getToastPosition } from "@/helpers";
+import { getToastPosition } from "@/app/helpers";
 
 export enum ToastPosition {
   topRight = "top-right",
@@ -56,9 +56,7 @@ const useToast = (position: positionType) => {
   // Generate Notifications
   const NotificationComponent = (
     <div
-      className={`fixed flex ${
-        isTopOriented ? "flex-col" : "flex-col-reverse"
-      } ${positionClass}`}
+      className={`fixed flex flex-col top-[20px] left-[20xp] ${positionClass} flex-wrap`}
     >
       {notifications.map((toast, index) => (
         <Toast
