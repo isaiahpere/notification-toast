@@ -1,5 +1,5 @@
-import { ToastIconsKey } from "@/components/toast";
-import { ToastPosition } from "@/hooks/useToast";
+import { AnimationType, ToastIconsKey } from "@/components/toast";
+import { positionType } from "@/hooks/useToast";
 
 export const getToastClass = (type: ToastIconsKey) => {
   switch (type) {
@@ -16,18 +16,31 @@ export const getToastClass = (type: ToastIconsKey) => {
   }
 };
 
-export const getToastPosition = (position: ToastPosition) => {
+export const getToastPosition = (position: positionType) => {
   switch (position) {
-    case ToastPosition.topRight:
+    case "topRight":
       return "top-[20px] right-[20px]";
-    case ToastPosition.topLeft:
+    case "topLeft":
       return "top-[20px] left-[20px]";
-    case ToastPosition.bottomRight:
+    case "bottomRight":
       return "bottom-[20px] right-[20px]";
-    case ToastPosition.bottomLeft:
+    case "bottomLeft":
       return "bottom-[20px] left-[20px]";
     default:
       console.log("DEFAULT HIT");
       return "top-[20px] right-[20px]";
+  }
+};
+
+export const getAnimation = (animationType: AnimationType) => {
+  switch (animationType) {
+    case "fade":
+      return "animate-fadeIn";
+    case "pop":
+      return "animate-popUp";
+    case "slide":
+      return "animate-slide";
+    default:
+      return "";
   }
 };

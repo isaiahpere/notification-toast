@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { LegacyRef, MutableRefObject, useEffect, useRef } from "react";
 import {
   AiOutlineCheckCircle,
   AiOutlineClose,
@@ -7,8 +8,8 @@ import {
   AiOutlineWarning,
 } from "react-icons/ai";
 
-import { getToastClass, getToastPosition } from "@/app/helpers";
-import { ToastPosition } from "@/hooks/useToast";
+import { getToastClass, getAnimation } from "@/helpers";
+import { positionType } from "@/hooks/useToast";
 
 export enum ToastIconsKey {
   success = "success",
@@ -27,8 +28,8 @@ export type AnimationType = keyof typeof animations;
 interface IProps {
   type?: ToastIconsKey | any;
   message?: string | any;
-  position: ToastPosition;
-  animationTye?: AnimationType;
+  position: positionType;
+  animationType?: AnimationType;
   onClose?: () => void;
 }
 
@@ -43,26 +44,42 @@ type IconKeys = keyof typeof icons;
 const Toast = ({
   type = ToastIconsKey.info,
   message,
-  position,
-  animationTye = "slide",
+  animationType = "slide",
   onClose,
 }: IProps) => {
+  const toastRef = useRef<any>(null); // ref
   let iconType: IconKeys = type;
 
   let toastclass = getToastClass(type);
-  let positionClass = getToastPosition(position);
+  let animationClass = getAnimation(animationType);
+
+  const ariaRole = type === "error" || type === "warning" ? "alert" : "status";
+  const ariaLive =
+    type === "error" || type === "warning" ? "assertive" : "polite";
+
+  useEffect(() => {
+    if (toastRef.current) {
+      toastRef.current?.focus();
+    }
+  }, []);
 
   return (
     <div
-      className={` p-4 m-2.5 text-white flex items-center rounded-lg shadow-md ${toastclass} fixed ${positionClass}${animations[animationTye]}`}
+      className={`p-4 m-2.5 text-white flex items-center rounded-lg shadow-md ${toastclass} ${animationClass}`}
+      aria-live={ariaLive}
+      role={ariaRole}
+      ref={toastRef}
+      tabIndex={-1}
     >
       <span className=" text-xl">{icons[iconType]}</span>
       <span className="px-4">{message}</span>
-      <AiOutlineClose
-        color="white"
-        onClick={onClose}
+      <button
         className="ml-auto cursor-pointer text-lg"
-      />
+        onClick={onClose}
+        aria-label="close toast"
+      >
+        <AiOutlineClose color="white" />
+      </button>
     </div>
   );
 };

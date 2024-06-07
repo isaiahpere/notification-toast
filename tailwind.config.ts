@@ -18,9 +18,19 @@ const config: Config = {
           "0%": { transform: "translateY(100%)" },
           "100%": { transform: "translateY(0)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        popUp: {
+          "0%": { transform: "scale(0.5)" },
+          "100%": { transform: "scale(1)" },
+        },
       },
       animation: {
-        slideIn: `slideIn 1s ease-in-out`,
+        slideIn: "slideIn 1s ease-in-out",
+        fadeIn: "fadeIn 0.5s ease-in-out",
+        popUp: "popUp 0.5s ease-in-out",
       },
     },
   },

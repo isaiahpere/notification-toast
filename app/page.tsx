@@ -6,12 +6,11 @@ import { ToastIconsKey } from "@/components/toast";
 
 export default function Home() {
   // custom hook - useToast(position)
-  const { NotificationComponent, triggerNotification } = useToast({
-    position: ToastPosition.bottomRight,
-  });
+  const { NotificationComponent, triggerNotification } =
+    useToast("bottomRight");
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-8 w-full">
+    <main className=" flex min-h-screen flex-col items-center p-8 w-full">
       <h1 className="text-center text-4xl font-bold">Toas Notifications</h1>
       {/* <Toast type={ToastIconsKey.success} message="You got a toast!" /> */}
 
@@ -20,20 +19,20 @@ export default function Home() {
           triggerNotification({
             type: ToastIconsKey.success,
             message: "you trigger you notie",
-            duration: 3000,
+            duration: 10000,
             animationType: "pop",
           })
         }
         className="border bg-lime-400 w-[200px] h-[36px] mt-4 mb-2 rounded-lg"
       >
-        Trigger Notifcation
+        Success
       </button>
       <button
         onClick={() =>
           triggerNotification({
             type: ToastIconsKey.warning,
             message: "this is warning message",
-            duration: 3000,
+            duration: 5000,
             animationType: "slide",
           })
         }
@@ -46,7 +45,7 @@ export default function Home() {
           triggerNotification({
             type: ToastIconsKey.error,
             message: "Your request Failed",
-            duration: 3000,
+            duration: 5000,
             animationType: "fade",
           })
         }
@@ -58,7 +57,7 @@ export default function Home() {
         onClick={() =>
           triggerNotification({
             type: ToastIconsKey.info,
-            message: "Informational Material",
+            message: "Informational Material Very Long Item Here",
             duration: 3000,
             animationType: "slide",
           })
@@ -67,7 +66,7 @@ export default function Home() {
       >
         Info
       </button>
-      {NotificationComponent}
+      <div>{NotificationComponent}</div>
     </main>
   );
 }
